@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html lang="jp">
+​
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>Document</title>
+</head>
+
+<body style="font-size: 14px;font-family: IPAMincho; margin: 0;padding: 0;">
+  <div
+    style="width: 21cm;min-height: 29.7cm;padding-left: 1.5cm; padding-left: 1cm; background: #fff; outline: 0;box-sizing: border-box;">
+    <div>
+      <p style="margin: 0;">配布先：職制
+        <br>原本：業務</p>
+      <p style="text-align: center;font-size: 24px;margin: 0.5cm 0 0;">決 裁 書</p>
+      <p style="text-align: right;margin: 0.5cm 0 0;"><u>決裁番号　構計 {{YEAR}}-{{MONTH}}</u>
+        <br><span style="text-align: right;">{{YEAR}}年{{MONTH}}月{{DAY}}日</span></p>
+      <div style="display: table;clear: both;"></div>
+      <p style="text-align: right;margin: 0;"> 出議部課名 構造計画部</p>
+      <div style="display: table;clear: both;"></div>
+    </div>
+    <div style="margin-top: 10px;">
+      <table border="1" cellSpacing="0" cellPadding="5"
+        style="width: 100%;border-collapse: collapse;border-style:hidden;border : 1px solid black;">
+          <tr>
+            <th style="width:12.5%">社長</th>
+            <th style="width:12.5%">取締役</th>
+            <th style="width:37.5%;" colspan="3">出議部</th>
+            <th style="width:37.5%" colspan="3">関連部門</th>
+          </tr>
+          <tr>
+            <th rowspan="2"></th>
+            <th rowspan="2"></th>
+            <th colspan="3">設計本部　構造計画部</th>
+            <th style="width:12.5%;">業長</th>
+            <th style="width:12.5%"></th>
+            <th style="width:12.5%">コンピューター室長</th>
+          </tr>
+          <tr>
+            <th style="width:12.5%;height: 60px;"></th>
+            <th style="width:12.5%"></th>
+            <th style="width:12.5%"></th>
+            <th style="width:12.5%"></th>
+            <th style="width:12.5%"></th>
+            <th style="width:12.5%"></th>
+          </tr>
+          <tr style="height: 80px;">
+            <th colspan="3">
+              条件・指示
+              <br/>
+              <br/>
+            </th>
+            <th colspan="2">{{1}}
+              <br/>
+              <br/>（完了予定：年月）
+            </th>
+            <th colspan="3">予算総額
+              <br/>￥{{2}} - (税込み)
+              <br/>({{3}})
+            </th>
+          </tr>
+          <tr>
+            <th align="left" valign="top" colspan="8"> 件名：{{4}}</th>
+          </tr>
+          <tr>
+            <th align="left" valign="top" colspan="8" style="height: 500px; padding: 10px;">
+              <div>内容 ：についてお伺い致します。</div>
+              <div style="padding-left: 40px;">
+                <br />
+                <p> &nbsp;&nbsp;&nbsp;&nbsp; 1．	購入品名／数量：（保守の場合は期間も）</p>
+                <p> &nbsp;&nbsp;&nbsp;&nbsp; 2．	購入金額：
+                <br/>&nbsp;&nbsp;&nbsp;&nbsp; ￥{{2}} - {{3}}</p>
+                <p> &nbsp;&nbsp;&nbsp;&nbsp; 3．	購入先：（複数ある場合は全て）</p>
+                <p> &nbsp;&nbsp;&nbsp;&nbsp; 4．	購入予定日：{{5}}</p>
+                <p> &nbsp;&nbsp;&nbsp;&nbsp; 5．	その他：{{6}}</p>
+              </div>
+            </th>
+          </tr>
+      </table>
+    </div>
+  </div>
+</body>
+​
+</html>
