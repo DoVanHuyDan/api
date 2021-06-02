@@ -73,35 +73,7 @@ class TaskController extends Controller
         }
     }
 
-    public function update(DepartmentUpdateRequest $request, $id)
-    {
-        try {
-            $data = $request->toArray();
-            $model = Task::where('id', $id)->first();
-            if (!$model) {
-                return response()->json(['error' => 'Not found'], 404);
-            }
-            $model->fill($data);
-            $model->update();
-            if ($request->has('oldFile')){
-                $oldFile = json_decode($request->oldFile, true);
-                $this->syncFiles($oldFile, $item);
-            }
-            if ($request->has('newFiles')) {
-                $this->upload($request->file('newFiles'), $item);
-            }
-            return response()->json([
-                'success' => true,
-                'data' => $model
-            ]);
-        } catch (\Exception $e) {
-            Log::error($e);
-            return response()->json([
-                'success' => false,
-                'error' => 'Server error'
-            ], 500);
-        }
-    }
+   
 
     public function syncFiles($attachment_relations, $document)
     {
@@ -132,7 +104,7 @@ class TaskController extends Controller
     public function destroy(Request $request, $id)
     {
         try {
-            User::where('id', $id)->delete();
+            File::where('id', $id)->delete();
             return response()->json(['success' => true]);
         } catch (\Exception $e) {
             Log::error($e);
@@ -143,21 +115,11 @@ class TaskController extends Controller
     public function search(Request $request)
     {
         $data = $request->toArray();
-        $query = Task::query()->with('creator','status','users');
-        if (array_key_exists('name', $data)) {
-            $query = $query->where('name','LIKE','%'.$data['name'].'%');
+        $query = File::query()->with('creator');
+        if (array_key_exists('category_id', $data)) {
+            $query = $query->where('category_id','LIKE','%'.$data['category_id'].'%');
         }
-        if (array_key_exists('status_id', $data)) {
-            $query = $query->where('status_id', intval($data['status_id']));
-        }
-        if (array_key_exists('department_id', $data)) {
-            $query = $query->where('department_id', intval($data['department_id']));
-        }
-        if (array_key_exists('users', $data)) {
-            $users = json_decode($data['users'],true);
-            $ids = UserTask::whereIn('user_id', $users)->pluck('task_id');
-            $query = $query->whereIn('id', $ids);
-        }
+        
         $result = $query->paginate($request->per_page ?? 20);
 
         return response()->json([
