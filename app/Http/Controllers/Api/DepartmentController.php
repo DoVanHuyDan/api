@@ -39,7 +39,7 @@ class DepartmentController extends Controller
         ]);
     }
 
-    public function store(CategoryStoreRequest $request)
+    public function store(Request $request)
     {
         try {
             $model = new Department();
@@ -53,7 +53,7 @@ class DepartmentController extends Controller
         }
     }
 
-    public function update(DepartmentUpdateRequest $request, $id)
+    public function update(Request $request, $id)
     {
         try {
             $data = $request->toArray();

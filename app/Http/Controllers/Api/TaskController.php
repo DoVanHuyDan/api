@@ -13,13 +13,14 @@ use App\Http\Requests\DepartmentUpdateRequest;
 use App\Models\Task;
 use App\Models\Department;
 use App\Models\User;
-// use App\Models\File;
+use App\Models\File;
 
 class TaskController extends Controller
 {
     public function index(Request $request)
     {
-        $pagination = Task::with('creator','status','users')->paginate($request->per_page ?? 100);
+        $user = Auth::user();
+        $pagination = File::where('tenant_id', $user['tenant_id'])->paginate($request->per_page ?? 100);
         return response()->json([
             'success' => true,
             'data' => $pagination->items(),
@@ -31,21 +32,26 @@ class TaskController extends Controller
         ]);
     }
     
-    public function store(CategoryStoreRequest $request)
+    public function store(Request $request)
     {
         try {
-            $model = new Task();
-            $data = $request->only($model->getFillable());
-            $model->fill($data);
-            $model->save();
-            if ($request->get('users') !== null) {
-                $users = json_decode($request->get('users'),true);
-                $model->users()->sync($users);
-            }
+            $data = $request->toArray();
+            $user = Auth::user();
             if ($request->has('newFiles')) {
-                $this->upload($request->file('newFiles'), $model);
+                $file = $request->file('newFiles');
+                    $path = $file->store('files', 'public');
+                    $originName = $file->getClientOriginalName();
+                    $size = $file->getClientsize();
+                    $attachment = File::create([
+                        'name' => $originName,
+                        'path' => $path,
+                        'size' => $size,
+                        'user_id' => $user['id'],
+                        'category_id' => $data['category_id'],
+                        'tenant_id' => $data['tenant_id'],
+                    ]);
             }
-            return response()->json(['success' => true, 'data' => $model]);
+            return response()->json(['success' => true]);
         } catch (\Exception $e) {
             Log::error($e);
             return response()->json(['error' => 'Server error'], 500);

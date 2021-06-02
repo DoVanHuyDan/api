@@ -18,11 +18,11 @@ class CreateTableFiles extends Migration
             $table->string('name');
             $table->string('path');
             $table->integer('size');
-            $table->integer('user_id')->unsigned();
+            $table->integer('user_id')->unsigned()->nullable()->default(null);
             $table->foreign('user_id')->references('id')->on('users');
-            $table->integer('category_id')->unsigned();
+            $table->integer('category_id')->unsigned()->nullable()->default(null);
             $table->foreign('category_id')->references('id')->on('categories');
-            $table->integer('tenant_id')->unsigned();
+            $table->integer('tenant_id')->unsigned()->nullable()->default(null);
             $table->foreign('tenant_id')->references('id')->on('tenants');
             $table->timestamps();
         });

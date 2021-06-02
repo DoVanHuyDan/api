@@ -16,4 +16,8 @@ class Department extends Model
         'phone',
         'address'
     ];
+
+    public function files(){
+        return $this->hasMany(File::class,'tenant_id','id');
+    }
 }
