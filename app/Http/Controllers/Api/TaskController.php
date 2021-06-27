@@ -10,10 +10,13 @@ use Illuminate\Support\Facades\Log;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\CategoryStoreRequest;
 use App\Http\Requests\DepartmentUpdateRequest;
+use Illuminate\Support\Facades\Response;
+use Illuminate\Support\Facades\Storage;
 use App\Models\Task;
 use App\Models\Department;
 use App\Models\User;
 use App\Models\File;
+
 
 class TaskController extends Controller
 {
@@ -131,5 +134,17 @@ class TaskController extends Controller
                 'total' => $result->total(),
             ]
         ]);
+    }
+
+
+    public function download($id){
+        $file = File::where('id', $id)->first();
+        // $path = $file->path;
+        $path = Storage::disk('public')->path($file->path);
+        $headers = array(
+            'Content-Type: image/png',
+          );
+       return Response::download($path, $file->name, $headers);
+        // return Storage::disk('public')->download($path,$file->name);
     }
 }

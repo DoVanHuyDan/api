@@ -43,6 +43,21 @@ class UserController extends Controller
         ]);
     }
 
+    public function accounts(Request $request)
+    {
+        $model = User::where('position', 1)->orWhere('position', 2)->paginate($request->per_page ?? 100);;
+        return response()->json([
+            'success' => true,
+            'data' => $model->items(),
+            'paging' => [
+                'current_page' => $model->currentPage(),
+                'per_page' => $model->perPage(),
+                'total' => $model->total(),
+            ]
+        ]);
+    }
+
+
     public function show(Request $request, $id)
     {
         $model = User::where('id', $id)->first();
@@ -56,6 +71,25 @@ class UserController extends Controller
     }
 
     public function store(UserStoreRequest $request)
+    {
+        try {
+            $id = Auth::user()->tenant_id;
+           if($id) {
+            $model = new User();
+            $data = $request->only($model->getFillable());
+            $data['password'] = Hash::make($data['password']);
+            $data['tenant_id'] = $id;
+            $model->fill($data);
+            $model->save();
+           }
+            return response()->json(['success' => true, 'data' => $model]);
+        } catch (\Exception $e) {
+            Log::error($e);
+            return response()->json(['error' => 'Server error'], 500);
+        }
+    }
+
+    public function addAccount(UserStoreRequest $request)
     {
         try {
             $model = new User();

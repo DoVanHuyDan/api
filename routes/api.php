@@ -24,6 +24,8 @@ Route::namespace('Api')->group(function() {
         Route::post('me/update-profile', 'UserController@updateProfile');
         Route::post('users/search', 'UserController@search');
         Route::get('get-users', 'UserController@getMyUser');
+        Route::get('accounts', 'UserController@accounts');
+        Route::post('download/{id}', 'TaskController@download');
         Route::apiResources([
             'tenants' => 'DepartmentController',
             'users' => 'UserController',
