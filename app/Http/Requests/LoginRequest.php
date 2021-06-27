@@ -26,7 +26,6 @@ class LoginRequest extends BaseRequest
             'password' => 'required'
         ];
     }
-
     /**
      * Get custom attributes for validator errors.
      *

@@ -20,7 +20,7 @@ class TaskController extends Controller
     public function index(Request $request)
     {
         $user = Auth::user();
-        $pagination = File::where('tenant_id', $user['tenant_id'])->paginate($request->per_page ?? 100);
+        $pagination = File::where('tenant_id', $user['tenant_id'])->with('creator', 'category')->paginate($request->per_page ?? 100);
         return response()->json([
             'success' => true,
             'data' => $pagination->items(),
@@ -48,7 +48,7 @@ class TaskController extends Controller
                         'size' => $size,
                         'user_id' => $user['id'],
                         'category_id' => $data['category_id'],
-                        'tenant_id' => $data['tenant_id'],
+                        'tenant_id' => $user['tenant_id'],
                     ]);
             }
             return response()->json(['success' => true]);

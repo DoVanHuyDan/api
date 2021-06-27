@@ -28,9 +28,10 @@ class UserController extends Controller
         ]);
     }
 
-    public function getMyUser(Request $request,$id)
+    public function getMyUser(Request $request)
     {
-        $model = User::where('department_id', $id)->paginate($request->per_page ?? 100);;
+        $id = Auth::user()->tenant_id;
+        $model = User::where('tenant_id', $id)->paginate($request->per_page ?? 100);;
         return response()->json([
             'success' => true,
             'data' => $model->items(),

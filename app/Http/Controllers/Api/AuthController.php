@@ -41,11 +41,6 @@ class AuthController extends Controller
             ]);
         } catch (\Exception $e) {
             Log::error($e);
-
-
-
-
-
             return response()->json([
                 "success" => false,
                 "error" => "Server error"
