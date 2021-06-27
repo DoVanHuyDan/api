@@ -27,16 +27,4 @@ class DepartmentUpdateRequest extends BaseRequest
             'name' => 'required|max:20'
         ];
     }
-
-    /**
-     * Get custom attributes for validator errors.
-     *
-     * @return array
-     */
-    public function attributes()
-    {
-        return [
-            'name' => '部門',
-        ];
-    }
 }

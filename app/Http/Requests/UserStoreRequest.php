@@ -30,18 +30,5 @@ class UserStoreRequest extends BaseRequest
         ];
     }
 
-    /**
-     * Get custom attributes for validator errors.
-     *
-     * @return array
-     */
-    public function attributes()
-    {
-        return [
-            'name' => '名前',
-            'email' => 'メールアドレス',
-            'password' => 'パスワード',
-            'position' => '役職'
-        ];
-    }
+
 }

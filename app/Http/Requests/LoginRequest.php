@@ -26,16 +26,4 @@ class LoginRequest extends BaseRequest
             'password' => 'required'
         ];
     }
-    /**
-     * Get custom attributes for validator errors.
-     *
-     * @return array
-     */
-    public function attributes()
-    {
-        return [
-            'name' => 'メールアドレス',
-            'password' => 'パスワード',
-        ];
-    }
 }

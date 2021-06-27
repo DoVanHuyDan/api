@@ -73,15 +73,11 @@ class UserController extends Controller
     public function store(UserStoreRequest $request)
     {
         try {
-            $id = Auth::user()->tenant_id;
-           if($id) {
             $model = new User();
             $data = $request->only($model->getFillable());
             $data['password'] = Hash::make($data['password']);
-            $data['tenant_id'] = $id;
             $model->fill($data);
             $model->save();
-           }
             return response()->json(['success' => true, 'data' => $model]);
         } catch (\Exception $e) {
             Log::error($e);
